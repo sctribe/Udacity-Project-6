@@ -27,31 +27,33 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
 
         it('have defined url', function() {
-            for(i =0; i<= allFeeds.length; i++){
-                for (var url in allFeeds[i]){
-                    expect(url).toBeDefined();
-                    expect(url).not.toBe(null);
-                }    
+            for(var i =0; i< allFeeds.length; i++){
+                
+                    expect(allFeeds[i].url).toBeDefined();
+                    expect(allFeeds[i].url).not.toBe(null);
+                    expect(allFeeds[i].url.length).not.toBe(0);
+                  
             }
         });
 
-        /* TODO: Write a test that loops through each feed
+        /* Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
 
         it('have defined name', function() {
-            for(i =0; i<= allFeeds.length; i++){
-                for (var name in allFeeds[i]){
-                    expect(name).toBeDefined();
-                    expect(name).not.toBe(null);
-                }    
+            for(i =0; i< allFeeds.length; i++){
+                
+                    expect(allFeeds[i].name).toBeDefined();
+                    expect(allFeeds[i].name).not.toBe(null);
+                    expect(allFeeds[i].name.length).not.toBe(0);
+                
             }
         });
 
@@ -59,7 +61,7 @@ $(function() {
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
+    /* Write a new test suite named "The menu" */
 
     describe('The menu', function() {
         
@@ -74,7 +76,7 @@ $(function() {
 
         });    
 
-         /* TODO: Write a test that ensures the menu changes
+         /* Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
@@ -90,11 +92,11 @@ $(function() {
 
     });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
+    /* Write a new test suite named "Initial Entries" */
 
     describe('Initial Entries', function() {
 
-        /* TODO: Write a test that ensures when the loadFeed
+        /* Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
@@ -103,7 +105,7 @@ $(function() {
 
          beforeEach(function(done) {
             loadFeed(0, done);
-         })
+         });
 
          it('loadFeed completed and at least one feed is loaded', function (){
             expect($('.entry-link').length).toBeGreaterThan(0);
@@ -112,26 +114,26 @@ $(function() {
     });
     
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    /* Write a new test suite named "New Feed Selection" */
 
     describe('New Feed Selection', function() {
 
-        /* TODO: Write a test that ensures when a new feed is loaded
+        /* Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-
+         var feed;
          beforeEach(function(done){
-            loadFeed(0, done);
+            loadFeed(1, function() {
+                feed = $('.feed').html();
+                loadFeed(0,done);
+            });
          });
 
-         it('feed title has changed', function() {
-            expect($('.header-title').text()).toBe(allFeeds[0]['name']);
+         it('feed has changed', function() {
+            expect($('.feed').html()).not.toBe(feed);
          });
 
-         it('new feed has loaded', function() {
-            expect($('.entry-link').length).toBeGreaterThan(0);
-         });
 
     });
 
